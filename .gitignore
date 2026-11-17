@@ -1,0 +1,9 @@
+# Environment files
+.env
+.envrc
+
+# IntelliJ IDEA / PyCharm
+.idea/
+*.iml
+out/
+.mcp.json
