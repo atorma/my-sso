@@ -9,3 +9,6 @@ out/
 .mcp.json
 # Local inputs for the hand-created cluster Secrets (see README). Never commit.
 /secrets/
+
+# OS
+.DS_Store
