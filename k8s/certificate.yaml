@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: auth-atorma-fi
+spec:
+  secretName: auth-atorma-fi-tls
+  dnsNames:
+    - auth.atorma.fi
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
