@@ -10,7 +10,7 @@ second Google account.
 - [x] 1.3 Write `k8s/namespace.yaml` (`auth`), `k8s/service.yaml`, `k8s/certificate.yaml` (`auth.atorma.fi`, `letsencrypt-prod`) and `k8s/ingress.yaml` (no auth annotations, larger `proxy-buffer-size`), and `k8s/kustomization.yaml` with `namespace: auth`; verify `kubectl kustomize k8s` renders without errors and every namespaced resource in the output is in `auth`
 - [x] 1.4 Extend `.gitignore` for the local secret input files, and verify `git check-ignore` matches each file name the README tells the owner to create
 - [x] 1.5 Add a gitleaks pre-commit hook (`.pre-commit-config.yaml`) and an MIT `LICENSE`; verify that committing a file containing a fake private key is blocked
-- [ ] 1.6 Before the first push, run `gitleaks git` over the whole history and search tracked files for email addresses; verify both come back empty, and that commits carry a GitHub noreply author address
+- [x] 1.6 Before the first push, run `gitleaks git` over the whole history and search tracked files for email addresses; verify both come back empty, and that commits carry a GitHub noreply author address
 
 ## 2. Deploy script and runbook
 
@@ -33,11 +33,5 @@ second Google account.
 - [x] 4.4 Restart the Deployment with `kubectl rollout restart deployment/oauth2-proxy -n auth`; verify the existing session still reaches `/oauth2/userinfo`
 - [x] 4.5 Visit `https://auth.atorma.fi/oauth2/sign_out`; verify `/oauth2/userinfo` then returns 401
 - [x] 4.6 Run `rotate-cookie-secret.sh`; verify its output does not contain the secret, that the Secret's client ID and client secret keys are unchanged, and that a previously signed-in browser gets 401 from `/oauth2/userinfo`, then sign in again
-- [ ] 4.7 **(owner)** At least a day after signing in again, open `https://auth.atorma.fi/oauth2/userinfo` in the same browser; verify it answers without a sign-in, showing the session outlives Google's short-lived access token
-- [ ] 4.8 Check the ingress controller logs for "too big header" during the sign-in flows above; if present, raise `proxy-buffer-size` and note in the README whether app ingresses need it too
-
-## Workflow follow-up
-
-- The tasks above verify the sign-on service on its own host only. These spec scenarios need a protected app and are verified by the `training-ai` change below, which is also the first real test of the README's annotation snippet: first visit on a new device, tampered session cookie, deep link survives sign-in, second app after signing in on the first (needs a second protected host, or the auth host as the first), and sign-on service down.
-- In the `training-ai` repository, propose a change that replaces the three basic-auth annotations on its ingress with the documented `auth-url` and `auth-signin` annotations, verifies those scenarios from a phone, and then deletes `training-ai-basic-auth`.
-- Archive this change only after that verification passes, and correct the README snippet here if it needed changes.
+- [x] 4.7 **(owner)** At least a day after signing in again, open `https://auth.atorma.fi/oauth2/userinfo` in the same browser; verify it answers without a sign-in, showing the session outlives Google's short-lived access token
+- [x] 4.8 Check the ingress controller logs for "too big header" during the sign-in flows above; if present, raise `proxy-buffer-size` and note in the README whether app ingresses need it too
